@@ -1,0 +1,47 @@
+<!doctype html>
+
+
+<head>
+    <meta charset="utf-8" />
+    <title>Performer Console</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="start-container">
+        <button id="start" disabled>Start audio + connect</button>
+
+        <p id="loading-message" style="color: #fff; margin-top: 10px; font-family: Arial, sans-serif;">
+            Loading 3D assets...
+        </p>
+    </div>
+
+    <div id="waiting-container">
+        <img src="qr-code.png" alt="QR Code" id="qr-image">
+        <p id="join-link">https://tinyurl.com/still-me</p>
+        <p id="participant-status">
+            <span id="participant-count">0</span>/50 participants joined
+        </p>
+        <button id="startControl">start</button>
+    </div>
+
+    <div id="controls-container">
+        <div class="grid" id="carriers"></div>
+        <div id="screen-2-container"></div>
+        <div id="screen-3-container">
+            <canvas id="formant-canvas"></canvas>
+        </div>
+        <div class="row" id="dice-stats-row" style="display: none;">
+        </div>
+        <div class="row" id="master-controls" style="display: none;">
+        </div>
+        <div class="row" id="formant-lfo-cards" style="display: none;">
+        </div>
+    </div>
+
+    <!-- <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script> -->
+    <script type="module" src="main.js"></script>
+
+</body>
+
+</html>
