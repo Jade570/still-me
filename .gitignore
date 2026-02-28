@@ -1,6 +1,7 @@
 /practices
 /node_modules
 /.env
+/recordings
 about.pdf
 materials.docx
 qr-code.png

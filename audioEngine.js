@@ -2,7 +2,12 @@
 
 // ===== CONFIG =====
 const H = 64; // PeriodicWave의 하모닉 수
-const VOWELS = { 'ㅐ': [520, 2100, 2600], 'ㅗ': [500, 900, 2400], 'ㅕ': [600, 1400, 2600] };
+// const VOWELS = { 'ㅐ': [520, 2100, 2600], 'ㅗ': [500, 900, 2400], 'ㅕ': [600, 1400, 2600] };
+const VOWELS = {
+    'ㅗ': [378.4227598, 2697.335103, 3561.798727],
+    'ㅐ': [772.5316769, 2168.926062, 3023.776787],
+    'ㅕ': [320.6933387, 1496.635645, 2946.250096]
+};
 const ring = ['ㅗ', 'ㅐ', 'ㅕ'];
 const detuneHzBySeat = {};
 let masterHzNormalized = 0.35; // 💡 Store normalized value
@@ -381,8 +386,8 @@ export function onDiceAvg(avg) {
 export function onSlider(seat, idx, val) {
     if (!ctx) return;
 
-    if (seat === 0) {
-        if (idx === 0) {
+    if (seat === 0) {//F1
+         if (idx === 0) {
             const Q = mapQ(val);
             formants[0].bp.Q.value = Q;
             const currentGainVal = formants[0].g.gain.value;
@@ -418,7 +423,7 @@ export function onSlider(seat, idx, val) {
             formantBaseGains[2] = val; // 💡 [추가]
             formants[2].g.gain.value = mapGain(val, 1) * qCompensatedGain(formants[2].bp.Q.value);
         }
-        // 💡 FIX: 'currentVowel' -> 'targetVowel' (이건 이미 수정되어 있네요. 좋습니다.)
+
         if (idx === 2) { fDetune[2] = mapDetuneHz(val, 200); setFormantFreqs(targetVowel); }
     } else if (seat === 3) {
         if (idx === 0) {
