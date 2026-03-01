@@ -40,7 +40,7 @@ export interface AudioEngine {
   getMasterHz01(): number;
 
   setPanMap(panMap: number[]): void;
-
+  getFormants(): { bp: BiquadFilterNode; g: GainNode }[];
   getCurrentVowel(): Vowel;
   getVowelRampState(): { from: Vowel; to: Vowel; startTime: number; duration: number; now: number };
 

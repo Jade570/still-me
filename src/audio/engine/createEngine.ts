@@ -136,6 +136,11 @@ export function createAudioEngine(): AudioEngine {
       carriers!.setPanMap(state.panMap);
     },
 
+    getFormants() {
+      requireInit();
+      return formants!.getFormants();
+    },
+
     getCurrentVowel() {
       requireInit();
       return formants!.getCurrentVowel();

@@ -12,6 +12,7 @@ export interface FormantsModule {
   formantSum: GainNode;
   amGain: GainNode;
 
+  getFormants(): FormantBank[];
   getCurrentVowel(): Vowel;
   getVowelRampState(now: number): { from: Vowel; to: Vowel; startTime: number; duration: number; now: number };
 
@@ -107,6 +108,10 @@ export function createFormants(ctx: AudioContext, inBus: AudioNode): FormantsMod
     formants[2].bp.frequency.value = f3 + fDetuneHz[2];
   }
 
+  function getFormants() {
+    return formants;
+  }
+
   function getCurrentVowel() {
     return targetVowel;
   }
@@ -126,6 +131,7 @@ export function createFormants(ctx: AudioContext, inBus: AudioNode): FormantsMod
     formants,
     formantSum,
     amGain,
+    getFormants,
     getCurrentVowel,
     getVowelRampState,
     setVowel,
