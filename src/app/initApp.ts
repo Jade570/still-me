@@ -77,7 +77,7 @@ export async function initApp() {
         rampInAllActiveSeats: (seats: any[]) => {
             if (!engine) return;
             seats.forEach((p, seat) => {
-                if (p && seat >= 4) engine.playerRampIn(seat);
+                if (p && seat >= 4) engine!.playerRampIn(seat);
             });
         },
     };
