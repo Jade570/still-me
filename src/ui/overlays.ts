@@ -1,7 +1,7 @@
 // src/ui/overlays.ts
 
 export interface Overlays {
-  urlOverlay: HTMLAnchorElement;
+  urlOverlay: HTMLParagraphElement;
   panicOverlay: HTMLDivElement;
 }
 
@@ -20,7 +20,7 @@ export interface PanicOptions {
  * (uiManager.js는 무조건 생성 :contentReference[oaicite:3]{index=3})
  */
 export function ensureOverlays(parent: HTMLElement = document.body): Overlays {
-  const existingUrl = document.getElementById("url-overlay") as HTMLAnchorElement | null;
+  const existingUrl = document.getElementById("url-overlay") as HTMLParagraphElement | null;
   const existingPanic = document.getElementById("panic-overlay") as HTMLDivElement | null;
 
   const urlOverlay = existingUrl ?? createUrlOverlay(parent);
@@ -30,19 +30,16 @@ export function ensureOverlays(parent: HTMLElement = document.body): Overlays {
 }
 
 export function showURLOverlay(
-    urlOverlayEl: HTMLElement | null,
-    url: string
+  urlOverlayEl: HTMLElement | null,
+  url: string
 ) {
   if (!urlOverlayEl) return;
-
-  // href 같은 건 없으니 텍스트만
   urlOverlayEl.textContent = url;
-  urlOverlayEl.removeAttribute("href");
-  urlOverlayEl.style.cursor = "default";
+  urlOverlayEl.style.cursor = "none";
   urlOverlayEl.style.display = "block";
 }
 
-export function hideURLOverlay(urlOverlayEl: HTMLAnchorElement | null) {
+export function hideURLOverlay(urlOverlayEl: HTMLParagraphElement | null) {
   if (!urlOverlayEl) return;
   urlOverlayEl.style.display = "none";
 }
@@ -80,11 +77,11 @@ export function fadePanic(
   }
 }
 
-function createUrlOverlay(parent: HTMLElement): HTMLAnchorElement {
-  const a = document.createElement("a");
-  a.id = "url-overlay";
-  parent.appendChild(a);
-  return a;
+function createUrlOverlay(parent: HTMLElement): HTMLParagraphElement {
+  const p = document.createElement("p");
+  p.id = "url-overlay";
+  parent.appendChild(p);
+  return p;
 }
 
 function createPanicOverlay(parent: HTMLElement): HTMLDivElement {

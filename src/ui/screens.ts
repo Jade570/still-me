@@ -26,13 +26,17 @@ export async function createScreens(dom: {
   screen2Container: HTMLElement;
   screen3Container: HTMLElement;
   loadingMessage?: HTMLElement;
+}, deps?: {
+  getEngine?: () => any;
 }) : Promise<ScreensApi> {
 
   screen1.init(dom.screen1Container);
 
   // ✅ 원래 레거시 main.js처럼 여기서 init
   await screen2.init(dom.screen2Container);
-  screen3.init(dom.screen3Container, "formant-canvas");
+  screen3.init(dom.screen3Container, "formant-canvas", {
+    getEngine: deps?.getEngine,
+  });
 
   const show = (n: 1|2|3) => {
     dom.screen1Container.style.display = n === 1 ? "grid" : "none";

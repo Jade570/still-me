@@ -1,13 +1,7 @@
 // screen3.js
-let engine = null;
+// Reads audio params via an injected provider to avoid cross-module imports.
 
-export function setEngine(e) { engine = e; }
-
-export function drawStuff() {
-    if (!engine) return;
-    const formants = engine.getFormants();
-    const ramp = engine.getVowelRampState();
-}
+let getEngine = () => null;
 
 let canvas;
 let ctx; // 2D Context
@@ -150,6 +144,7 @@ function drawPatternCircle(
 // 💡 7. draw (main loop)
 function draw(timestamp) {
     // ---- 엔진 준비 전이면 그냥 다음 프레임만 예약하고 끝 ----
+    const engine = getEngine?.();
     if (!engine || !engine.getFormants || !engine.getVowelRampState) {
         requestAnimationFrame(draw);
         return;
@@ -252,7 +247,12 @@ function handleResize() {
 }
 
 // 9. init
-export function init(containerElement, canvasId) {
+export function init(containerElement, canvasId, deps) {
+    // deps: { getEngine: () => AudioEngine | null }
+    if (deps && typeof deps.getEngine === 'function') {
+        getEngine = deps.getEngine;
+    }
+
     container = containerElement;
     canvas = document.getElementById(canvasId);
     if (!canvas) throw new Error(`Canvas with id #${canvasId} not found.`);
