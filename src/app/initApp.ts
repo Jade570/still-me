@@ -11,6 +11,7 @@ import { ensureOverlays, showURLOverlay, fadePanic } from "../ui/overlays";
 import { makeKnob } from "../ui/knobs";
 import { createAudioEngine } from "../audio";
 import * as screen3 from "../ui/screens/screen3"; // ✅ setEngine 주입용
+import { hideCursor, showCursor } from "../ui/cursor";
 
 export async function initApp() {
     const env = {
@@ -33,8 +34,6 @@ export async function initApp() {
     // join-link 텍스트
     dom.joinLink.textContent = env.JOIN_LINK_TEXT;
 
-
-
     // screens init (screen2 async 포함)
     const screens = await createScreens({
         screen1Container: dom.screen1Container,
@@ -46,8 +45,6 @@ export async function initApp() {
     // ✅ 레거시 동작 복원: 로딩 끝나면 Start 버튼 활성화
     dom.loadingMessage.style.display = "none";
     dom.startButton.disabled = false;
-    // (원하시면 텍스트도 여기서 갱신)
-    // dom.startButton.textContent = "Start audio + connect";
 
     // knobs (DOM에 없으면 no-op knob)
     const morphKnob = makeKnob(dom.morphKnobEl, (phase) => {
@@ -151,6 +148,7 @@ export async function initApp() {
 
     // Start 버튼
     dom.startButton.addEventListener("click", async () => {
+        showCursor();
         dom.startContainer.style.display = "none";
         dom.waitingContainer.style.display = "flex";
 
@@ -189,6 +187,7 @@ export async function initApp() {
 
     // startControl 버튼: 컨트롤 화면으로 전환
     dom.startControlButton.addEventListener("click", () => {
+        hideCursor();
         dom.waitingContainer.style.display = "none";
         dom.controlsContainer.style.display = "flex";
         screens.show(1);
